@@ -1,0 +1,130 @@
+public class MergeSort {
+
+    public static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+
+            // Sort the first and second halves
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+
+            // Merge the sorted halves
+            merge(arr, left, mid, right);
+        }
+    }
+
+    public static void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        // Create temporary arrays
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        // Copy data to temporary arrays L[] and R[]
+        for (int i = 0; i < n1; i++) {
+            L[i] = arr[left + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            R[j] = arr[mid + 1 + j];
+        }
+
+        // Merge the temporary arrays back into arr[left..right]
+        int i = 0, j = 0;
+        int k = left;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        // Copy the remaining elements of L[], if any
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        // Copy the remaining elements of R[], if any
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {38, 27, 43, 3, 9, 82, 10};
+
+        System.out.println("Original Array:");
+        printArray(arr);
+
+        int n = arr.length;
+        mergeSort(arr, 0, n - 1);
+
+        System.out.println("\nSorted Array:");
+        printArray(arr);
+    }
+
+    public static void printArray(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+}
+/*
+Merge Sort Function:
+
+public static void mergeSort(int[] arr, int left, int right): This function is responsible for sorting an array arr between indices left and right using the Merge Sort algorithm.
+It begins by checking if left is less than right, which serves as the base case for the recursive calls. If this condition is met, it proceeds with the sorting process.
+Divide Step:
+
+Inside the mergeSort function, it calculates the middle index mid as (left + right) / 2, effectively dividing the array into two halves.
+Recursive Calls:
+
+The function then recursively calls itself twice:
+mergeSort(arr, left, mid): Sorts the left half of the array.
+mergeSort(arr, mid + 1, right): Sorts the right half of the array.
+Merge Step:
+
+After both halves are sorted, the merge function is called to merge these sorted halves back together into a single sorted array.
+Merge Function:
+
+public static void merge(int[] arr, int left, int mid, int right): This function is responsible for merging two sorted subarrays.
+It calculates the sizes of the two subarrays, n1 and n2, based on the mid index.
+Temporary arrays L and R are created to store the elements of the left and right subarrays, respectively.
+The elements of the subarrays are copied into the temporary arrays L and R.
+The function then merges these subarrays back into the original array arr by comparing elements from L and R and placing them in sorted order.
+Printing the Array:
+
+In the main method, an example array arr is defined.
+The original array is printed using the printArray function.
+Merge Sort is applied to the array to sort it in ascending order.
+The sorted array is printed again to show the result.
+Printing Utility Function:
+
+public static void printArray(int[] arr): This utility function is used to print the elements of an array.
+When you run this code with the provided example array, it will demonstrate the Merge Sort algorithm by first printing the unsorted array and then printing the sorted array.
+
+Here's what the expected output will look like:
+
+javascript
+Copy code
+Original Array:
+38 27 43 3 9 82 10 
+
+Sorted Array:
+3 9 10 27 38 43 82 
+The Merge Sort algorithm effectively sorts the array in ascending order, as demonstrated by the code.
+
+*/
+
+
+
